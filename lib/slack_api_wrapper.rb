@@ -1,5 +1,7 @@
 require 'httparty'
 
+# to list channes from slack and list them
+
 class SlackApiWrapper
 
   URL = "https://slack.com/api/"
@@ -35,7 +37,7 @@ class SlackApiWrapper
       "as_user" => "false"
     },
     :headers => { 'Content-Type' => 'application/x-www-form-urlencoded' })
-    return response.success?
+    return response
 
   end
 end
