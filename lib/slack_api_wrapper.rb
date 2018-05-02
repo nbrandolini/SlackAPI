@@ -9,12 +9,19 @@ class SlackApiWrapper
   def self.list_channels
     response = HTTParty.get("#{URL}channels.list?token=#{TOKEN}")
 
+    channel_list = []
+
+
     if response ["channels"]
-      return response["channels"]
-    else
-      return []
+      response["channels"].each do |channel|
+        channel_list << Channel.new(channel["name"], channel["id"])
+      end
     end
+
+    return channel_list
   end
+
+
 
   def self.send_message(channel,message)
     message_url = "#{URL}chat.postMessage"
@@ -22,8 +29,9 @@ class SlackApiWrapper
       "token" => TOKEN,
       "channel" => channel,
       "text" => message,
-      "username" => "Betsy",
+      "username" => "Sunny",
       "icon_emoji" => ":scream_cat:",
+
       "as_user" => "false"
     },
     :headers => { 'Content-Type' => 'application/x-www-form-urlencoded' })
